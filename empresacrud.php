@@ -1,13 +1,13 @@
 <?php
 
-    class usuarios{
+    class empresaCRUD{
         
-    //Metodo para consultar si existe una cuenta con dicho usuario y contraseña
-    public static function getLogin($usuario, $clave){
+    //Metodo para consultar si existe una empresa con dicho nombre y contraseña
+    public static function getLogin($empresa, $contrasena){
     include("connection_db.php");
     
-    // Consulta de la tabla usuarios para verificar email existentes.
-    $query = "SELECT * FROM tb_usuario WHERE usuario = ? and clave = ?";
+    // Consulta de la tabla empresa para verificar si existe una empresa registrada con dichos datos.
+    $query = "SELECT * FROM tb_empresa WHERE  nombre = ? and contrasena = ?"; //Sentencia SQL para consultar datos en la tabla empresa
     try {    
           $link=conexion();    
           $comando = $link->prepare($query);
@@ -17,7 +17,7 @@
           if( $filasAfectadas > 0){
             return $row;
           }
-          $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
+          $mensaje = array("mensaje" =>"Id empresa o contraseña incorrectos, puede que no exista una empresa con dicas credenciales");
           return $mensaje;
 
         } catch (PDOException $e) {
@@ -26,7 +26,6 @@
         
     }
 
-    //Metodo para consultar si existe una cuenta con dicho usuario y contraseña
     public static function getDatosIndividual($usuario){
         include("connection_db.php");
         
@@ -49,50 +48,22 @@
             }
             
         }
-
-    public static function getLoginCorreo($correo, $contrasena){
-        include("connection_db.php");
         
-        // Consulta de la tabla usuarios para verificar email existentes.
-        $query = "SELECT * FROM tb_usuario WHERE correo = '$correo' and clave = ?";
-        try {    
-              $link=conexion();    
-              $comando = $link->prepare($query);
-              $comando->execute(array($contrasena));
-              $row = $comando->fetch(PDO::FETCH_ASSOC);
-              $filasAfectadas = $comando->rowCount();
-              if( $filasAfectadas > 0){
-                return $row;
-              }
-              $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
-              return $mensaje;
-    
-            } catch (PDOException $e) {
-                return -1;
-            }
-            
-        }
-        
-    //Metodo para registrar usuarios
-    public static function setUser($nombres, $Telefono, $correo, $direccion, $codigopostal){
+    //Metodo para registrar empresas
+    public static function setEmpresa($nombre, $telefono, $correo, $direccion, $codigopostal, $contrasena){
         include ("connection_db.php");
-        $query = "INSERT INTO tb_empresa (nombre, Telefono, correo, direccion, codigo postal)
-        VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO tb_empresa (nombre, Telefono, correo, direccion, codigo_postal, contrasena)
+        VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            $CheckUser = usuarios::checkUserName($nombres);
+            $CheckUser = empresaCRUD::checkName($nombre);
             if($CheckUser == 1){
                 $mensaje = "Nombre de Empresa no diponible, escoja otro.";
-                return $mensaje;
-            }
-            $CheckUserEmail = usuarios::checkUserEmail($correo);
-            if($CheckUserEmail == 1){
-                $mensaje = "Correo electrónico en uso, utilice otro.";
                 return $mensaje;
             }
             
             $link = conexion();
             $comando = $link -> prepare ($query);
-            $comando -> execute (array($nombres, $Telefono, $correo, $direccion, $codigopostal));
+            $comando -> execute (array($nombre, $telefono, $correo, $direccion, $codigopostal, $contrasena));
             $row = $comando -> rowCount();
             if($row > 0){
                 return 1;
@@ -105,20 +76,20 @@
 
     }
 
-    //Metodo para comprobar si ya existe un usuario con dicho nombre
-    private static function checkUserName($usuario){
-        $query = "SELECT usuario FROM tb_usuario WHERE usuario = ?";
+    //Metodo para comprobar si ya existe un empresa con dicho nombre
+    private static function checkName($empresa){
+        $query = "SELECT nombre FROM tb_empresa WHERE nombre = ?";
         try{
             $link = conexion();
             $comando = $link -> prepare ($query);
-            $comando -> execute (array($usuario));
+            $comando -> execute (array($empresa));
             $row = $comando -> rowCount();
             if($row > 0){
-                //significa que encontro una cuenta que ya tiene ese nombre de usuario
+                //significa que encontro una cuenta de empresa que ya tiene ese nombre 
                 //No permite crear cuenta si esto sucede
                 return 1;
             }else{
-                //No encontro ninguna cuenta con dicho nickname
+                //No encontro ninguna empresa con dicho nombre 
                 //puede continuar con el registro 
                 return 0;
             }
@@ -126,27 +97,7 @@
             return $e;
         }
     }
-      //Metodo para comprobar si ya existe un usuario con dicho correo
-      private static function checkUserEmail($correo){
-        $query = "SELECT correo FROM tb_usuario WHERE correo = ?";
-        try{
-            $link = conexion();
-            $comando = $link -> prepare ($query);
-            $comando -> execute (array($correo));
-            $row = $comando -> rowCount();
-            if($row > 0){
-                //significa que encontro una cuenta que ya tiene ese nombre de usuario
-                //No permite crear cuenta si esto sucede
-                return 1;
-            }else{
-                //No encontro ninguna cuenta con dicho nickname
-                //puede continuar con el registro 
-                return 0;
-            }
-        }catch(PDOException $e){
-            return $e;
-        }
-    }
+      
         //Método para obtener la pregunta
         public static function getPregunta($correo){
             include ("connection_db.php");
