@@ -17,7 +17,7 @@
           if( $filasAfectadas > 0){
             return $row;
           }
-          $mensaje = array("mensaje" =>"Id empresa o contraseña incorrectos, puede que no exista una empresa con dicas credenciales");
+          $mensaje = array("mensaje" =>"Nombre de empresa o contraseña incorrectos, puede que no exista una empresa con dichas credenciales");
           return $mensaje;
 
         } catch (PDOException $e) {
@@ -26,21 +26,21 @@
         
     }
 
-    public static function getDatosIndividual($usuario){
+    public static function getDatosIndividual($empresa){
         include("connection_db.php");
         
         // Consulta de la tabla usuarios para verificar email existentes.
-        $query = "SELECT * FROM tb_usuario WHERE usuario = ? ";
+        $query = "SELECT * FROM tb_empresa WHERE nombre = ? ";
         try {    
               $link=conexion();    
               $comando = $link->prepare($query);
-              $comando->execute(array($usuario));
+              $comando->execute(array($empresa));
               $row = $comando->fetch(PDO::FETCH_ASSOC);
               $filasAfectadas = $comando->rowCount();
               if( $filasAfectadas > 0){
                 return $row;
               }
-              $mensaje = array("mensaje" =>"Usuario o contraseña incorrectos, puede que no exista un usuario con dicas credenciales");
+              $mensaje = array("mensaje" =>"No se encontraron los datos de dicha empresa");
               return $mensaje;
     
             } catch (PDOException $e) {
