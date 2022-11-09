@@ -16,7 +16,7 @@
         ($usuario != "") and ($clave != "") and ($tipo != "") and
         ($estado != "") and ($pregunta != "") and ($respuesta != "")){
             
-            $resultado = usuarios::setUser($nombres, $apellidos, $correo, $usuario, $clave, $tipo, $estado, $pregunta, $respuesta);
+            $resultado = usuarios::setUser($nombres, $apellidos, $correo, $usuario, $clave);
 
             if($resultado == 1){
                 header('Content-type: application/json; charset=utf-8');
