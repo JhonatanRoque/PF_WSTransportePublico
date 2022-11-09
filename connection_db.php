@@ -18,6 +18,9 @@ try{
 	return $conn;
 }
 
- conexion();
+ //conexion();
+ 	//by Tec. Wilson
+    //Modificado por: Tec. Francisco Abarca
+    //Fecha modificación: 07/11/2022 --:-- pm
 
 ?>
