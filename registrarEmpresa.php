@@ -29,4 +29,9 @@
             }
 
     }
+    else {
+        header('Content-type: application/json; charset=utf-8');
+        $json_string = json_encode(array("estado" => 0, "mensaje" => "No se ingresaron datos"));
+        echo $json_string;
+    }
 ?>
