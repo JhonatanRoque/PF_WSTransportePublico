@@ -11,7 +11,7 @@
     try {    
           $link=conexion();    
           $comando = $link->prepare($query);
-          $comando->execute(array($usuario,$clave));
+          $comando->execute(array($empresa,$contrasena));
           $row = $comando->fetch(PDO::FETCH_ASSOC);
           $filasAfectadas = $comando->rowCount();
           if( $filasAfectadas > 0){
