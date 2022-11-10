@@ -216,6 +216,48 @@
             }
             
         }
+        //Metodo para generar el codigo de verificación de la base de datos
+        public static function setCodigoV(){
+            try{
+                $codigo = rand(100000, 999999);
+                $query = "UPDATE tb_codigo SET codigo_validacion = $codigo";
+                $link = conexion();
+                $comando = $link->prepare($query);
+                $comando->execute();
+                $row = $comando->fetch(PDO::FETCH_ASSOC);
+                $filasAfectadas = $comando->rowCount();
+                return $filasAfectadas;
+               
+            }catch(PDOException $e){
+                return $e;
+            }
+
+        }
+        //Metodo para obtener el codigo de verificación de la base de datos
+        public static function getCodigoV(){
+            include("connection_db.php");
+            try{
+                $bandera = empresaCRUD::setCodigoV();
+                if(!$bandera > 0 ){
+                    return array("mensaje" => "No se modifico el codigo");
+                }
+                $query = "SELECT codigo_validacion as codigo FROM tb_codigo";
+                $link = conexion();
+                $comando = $link->prepare($query);
+                $comando->execute();
+                $row = $comando->fetch(PDO::FETCH_ASSOC);
+                $filasAfectadas = $comando->rowCount();
+                if( $filasAfectadas > 0){
+                    return $row['codigo'];
+                }else{
+                    //No se encontro ningun codigo para enviar
+                    return 0;
+                }
+            }catch(PDOException $e){
+                return $e;
+            }
+
+        }
         
     }
     //by Tec. Francisco Abarca 
