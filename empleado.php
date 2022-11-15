@@ -5,7 +5,7 @@ class Empleados{
     //Método para registrar empleados
     public static function setEmpleado($nombre, $apellido, $telefono, $correo, $direccion, $empresaID, $rutaID, $autoID){
         include("connection_db.php");
-        $query = "INSERT INTO  tbEmpleeado (nombre, apellido, telefono, correo, direccion, empresaID, rutaID, autoID)
+        $query = "INSERT INTO  tbEmpleado (nombre, apellido, telefono, correo, direccion, empresaID, rutaID, autoID)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try{    
           $link=conexion();    
