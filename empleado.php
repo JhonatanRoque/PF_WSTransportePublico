@@ -26,7 +26,7 @@ class Empleados{
     //Método para configurar ubicación del conductor
     public static function setUbicacion($id, $latitud, $longitud){
         include("connection_db.php");
-        $query = "UPDATE tbEmpleado SET latitud = '?', longitud = '?' WHERE id = ?";
+        $query = "UPDATE tbEmpleado SET latitud = ?, longitud = ? WHERE id = ?";
 
         try{
             $link = conexion();
