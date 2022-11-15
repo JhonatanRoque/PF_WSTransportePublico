@@ -97,22 +97,22 @@ class Empleados{
     
 }
 
-public static function obtenerProductosIndividual($id) {
+public static function listarEmpleadoIndividual($correo) {
     include("connection_db.php");
     
-    $query = "SELECT * FROM tb_producto WHERE id_producto = ?";
+    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbAuto as tbA ON tbE.autoID = tbA.id WHERE tbE.correo = ?";
 
-    try {
+    try { 
         $link=conexion();    
         $comando = $link->prepare($query);
         // Ejecutar sentencia preparada
-        $comando->execute(array($id));
+        $comando->execute(array($correo));
         
         $rows_array = array();
         while($result = $comando->fetch(PDO::FETCH_ASSOC))
             {
                                    
-                 $array [] = array('id' => $result['id_producto'], 'nombreProducto' => $result['nom_producto'], 'descripcion' => $result['des_producto'], 'stock' => $result['stock'], 'precio' => $result['precio'], 'UnidadMedida' => $result['unidad_de_medida'], 'estado' => $result['estado_producto'], 'categoria' => $result['categoria'], 'fecha' => $result['fecha_entrada']);
+                 $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
                 
             }
             

@@ -1,10 +1,10 @@
 <?php
-include("main_class.php");
+include("empleado.php.php");
 $id = $_POST['codigo'];
 //$id = 16272;
 
 if($id != ""){
-    $resultado = MantenimientoProductos::obtenerProductosIndividual($id);
+    $resultado = Empleados::listarEmpleadoIndividual($id);
     if ($resultado) {
         echo $resultado;
     } else {
@@ -15,7 +15,7 @@ if($id != ""){
 
    //by Tec. Francisco Abarca 
     //Modificado por: Tec. Francisco Abarca
-    //Fecha modificación: 16/10/2022 02:20 pm
+    //Fecha modificación: 15/11/2022 06:00 pm
 
 
 ?>
