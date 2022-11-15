@@ -1,9 +1,9 @@
 <?php
-include('main_class.php');
+include('empleado.php');
 
-if (isset($_POST["codigo"])){
- 	$codigo = $_POST['codigo'];
-	$resultado = MantenimientoProductos::eliminar_Producto($codigo);
+if (isset($_POST["idEmpleado"])){
+ 	$empleadoID = $_POST['idEmpleado'];
+	$resultado = Empleados::eliminarEmpleado($empleadoID);
 	
 	if ($resultado==1) {
         header('Content-type: application/json; charset=utf-8');

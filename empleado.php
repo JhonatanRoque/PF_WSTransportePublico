@@ -46,13 +46,13 @@ class Empleados{
     
     
     
-    public static function eliminar_Producto($codigo){
+    public static function eliminarEmpleado($empleadoID){
       include("connection_db.php");
-      $query = "DELETE from tb_producto WHERE id_producto = ?";
+      $query = "DELETE from tbEmpleado WHERE id = ?";
       try{
           $link=conexion();
           $comando=$link->prepare($query);
-          $comando->execute(array($codigo));
+          $comando->execute(array($empleadoID));
           //return $comando;
           $count = $comando->rowCount(); 
           if($count>0){
@@ -68,10 +68,10 @@ class Empleados{
   
   
   
-  public static function obtenerProductos() {
+  public static function listarEmpleados($empresaID) {
     include("connection_db.php");
     
-    $query = "SELECT * FROM tb_producto";
+    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbE.autoID = tbA.id";
 
     try {
         $link=conexion();    
@@ -83,7 +83,7 @@ class Empleados{
         while($result = $comando->fetch(PDO::FETCH_ASSOC))
             {
                                    
-                 $array [] = array('id' => $result['id_producto'], 'nombreProducto' => $result['nom_producto'], 'descripcion' => $result['des_producto'], 'stock' => $result['stock'], 'precio' => $result['precio'], 'UnidadMedida' => $result['unidad_de_medida'], 'estado' => $result['estado_producto'], 'categoria' => $result['categoria'], 'fecha' => $result['fecha_entrada']);
+                 $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
                 
             }
             
