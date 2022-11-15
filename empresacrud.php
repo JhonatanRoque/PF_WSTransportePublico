@@ -241,7 +241,7 @@
                 if(!$bandera > 0 ){
                     return array("mensaje" => "No se modifico el codigo");
                 }
-                $query = "SELECT codigo_validacion as codigo FROM tb_codigo";
+                $query = "SELECT codigoValidacion as codigo FROM tb_codigo";
                 $link = conexion();
                 $comando = $link->prepare($query);
                 $comando->execute();
