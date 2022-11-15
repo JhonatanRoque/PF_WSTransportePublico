@@ -22,5 +22,8 @@ if(($id != "") and ($lat != "") and ($long != "")){
 
     }
 }
+else {
+    echo "Faltan algunos datos";
+}
 
 ?>
