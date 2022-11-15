@@ -27,10 +27,10 @@ if (($nombre!="") and
         echo $json_string;
         //echo "Registro guardado...";
     } else {
-        /*header('Content-type: application/json; charset=utf-8');
+        header('Content-type: application/json; charset=utf-8');
         $json_string = json_encode(array("estado" => 2,"mensaje" => "Ocurrio un problema, no se pudo registrar al empleado $nombre"));
-		echo $json_string;*/
-        echo $resultado;
+		echo $json_string;
+        
 
     }
 }

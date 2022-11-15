@@ -22,6 +22,26 @@ class Empleados{
             return -1;
         }                        
     }
+
+    //Método para configurar ubicación del conductor
+    public static function setUbicacion($id, $latitud, $longitud){
+        include("connection_db.php");
+        $query = "UPDATE tbEmpleado SET latitud = '?', longitud = '?' WHERE id = ?";
+
+        try{
+            $link = conexion();
+            $comando = $link->prepare($query);
+            $comando->execute(array($latitud, $longitud, $id));
+            $count = $comando->rowCount(); 
+            if($count>0){
+                return 1;
+            }else{
+                return 0;   
+            }
+        }catch (PDOException $e){
+            return -1;
+        }
+    }
     
     
     
