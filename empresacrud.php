@@ -220,7 +220,7 @@
         public static function setCodigoV(){
             try{
                 $codigo = rand(100000, 999999);
-                $query = "UPDATE tb_codigo SET codigo_validacion = $codigo";
+                $query = "UPDATE tb_codigo SET codigoValidacion = $codigo";
                 $link = conexion();
                 $comando = $link->prepare($query);
                 $comando->execute();
