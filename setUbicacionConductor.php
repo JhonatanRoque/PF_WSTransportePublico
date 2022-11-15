@@ -3,7 +3,7 @@ include("empleado.php");
 
 $id = $_POST['idEmpleado'];
 $lat = htmlspecialchars($_POST['latitud'], ENT_QUOTES);
-$long = htmlspecialchars($_POST['latitud'], ENT_QUOTES);
+$long = htmlspecialchars($_POST['longitud'], ENT_QUOTES);
 
 if(($id != "") and ($lat != "") and ($long != "")){
     $resultado = Empleados::setUbicacion($id, $lat, $long);
