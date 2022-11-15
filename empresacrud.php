@@ -7,7 +7,7 @@
     include("connection_db.php");
     
     // Consulta de la tabla empresa para verificar si existe una empresa registrada con dichos datos.
-    $query = "SELECT * FROM tb_empresa WHERE  nombre = ? and contrasena = ?"; //Sentencia SQL para consultar datos en la tabla empresa
+    $query = "SELECT * FROM tbEmpresa WHERE  nombre = ? and contrasena = ?"; //Sentencia SQL para consultar datos en la tabla empresa
     try {    
           $link=conexion();    
           $comando = $link->prepare($query);
@@ -52,7 +52,7 @@
     //Metodo para registrar empresas
     public static function setEmpresa($nombre, $telefono, $correo, $direccion, $codigopostal, $contrasena){
         include ("connection_db.php");
-        $query = "INSERT INTO tb_empresa (nombre, Telefono, correo, direccion, codigo_postal, contrasena)
+        $query = "INSERT INTO tbEmpresa (nombre, telefono, correo, direccion, codigoPostal, contrasena)
         VALUES (?, ?, ?, ?, ?, ?)";
         try{
             $CheckUser = empresaCRUD::checkName($nombre);
@@ -78,7 +78,7 @@
 
     //Metodo para comprobar si ya existe un empresa con dicho nombre
     private static function checkName($empresa){
-        $query = "SELECT nombre FROM tb_empresa WHERE nombre = ?";
+        $query = "SELECT nombre FROM tbEmpresa WHERE nombre = ?";
         try{
             $link = conexion();
             $comando = $link -> prepare ($query);
