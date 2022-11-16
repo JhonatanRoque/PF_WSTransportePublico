@@ -2,7 +2,7 @@
 include("empleado.php.php");
 $correo = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
-if($empresaID != ""){
+if($correo != ""){
     $resultado = Empleados::listarEmpleadoIndividual($correo);
     if ($resultado) {
         echo $resultado;
