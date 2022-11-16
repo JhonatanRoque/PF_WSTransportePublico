@@ -1,6 +1,6 @@
 <?php
 include("empleado.php");
-$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
+$email = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
 
 if($email != ""){
