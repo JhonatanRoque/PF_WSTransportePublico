@@ -1,9 +1,9 @@
 <?php
 include("empleado.php.php");
-$correo = htmlspecialchars($_POST['correo'], ENT_QUOTES);
+$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
-if($correo != ""){
-    $resultado = Empleados::listarEmpleadoIndividual($correo);
+if($email != ""){
+    $resultado = Empleados::listarEmpleadoIndividual($email);
     if ($resultado) {
         echo $resultado;
     } else {
