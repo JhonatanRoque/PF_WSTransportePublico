@@ -1,6 +1,6 @@
 <?php
 
-    class Rutas{
+    class Paradas{
         
     //Metodo para consultar si existe una empresa con dicho nombre y contraseña
     public static function getLogin($empresa, $contrasena){
@@ -26,22 +26,22 @@
         
     }
 
-    public static function listarRutas() {
+    public static function listarParadasIndividual($rutaID) {
         include("connection_db.php");
         
-        $query = "SELECT * FROM tbRuta ";
+        $query = " SELECT  tbP.nombre as parada FROM tbRuta as tbR INNER JOIN tbRutaParada as tbRP ON tbR.id = tbRP.rutaID INNER JOIN tbParada as tbP ON tbRP.paradaID = tbP.id WHERE tbR.id = ?";
     
         try {
             $link=conexion();    
             $comando = $link->prepare($query);
             // Ejecutar sentencia preparada
-            $comando->execute(array($empresaID));
+            $comando->execute(array($rutaID));
             
             $rows_array = array();
             while($result = $comando->fetch(PDO::FETCH_ASSOC))
                 {
                                        
-                     $array [] = array('id' => $result['id'], 'nombre' => $result['nombre']);
+                     $array [] = array('parada' => $result['parada']);
                     
                 }
                 
@@ -84,8 +84,7 @@
         $query = "INSERT INTO tbEmpresa (nombre, telefono, correo, direccion, codigoPostal, contrasena)
         VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            
-            
+          
             $link = conexion();
             $comando = $link -> prepare ($query);
             $comando -> execute (array($nombre, $telefono, $correo, $direccion, $codigopostal, $contrasena));
