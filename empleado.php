@@ -42,6 +42,26 @@ class Empleados{
             return -1;
         }
     }
+
+    public static function getUbicaciones($rutaID){
+        include("connection_db.php");
+        $query = " SELECT tbE.nombre, tbE.apellido, tbE.latitud, tbE.longitud FROM tbEmpleado as tbE WHERE tbE.rutaID = ?";
+
+        try{
+            $link = conexion();
+            $comando = $link->prepare($query);
+            $comando->execute(array($rutaID));
+            $count = $comando->rowCount(); 
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+            {
+                                   
+                 $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'latitud' => $result['latitud'], 'longitud' => $result['longitud']);
+                
+            }
+        }catch (PDOException $e){
+            return -1;
+        }
+    }
     
     
     
