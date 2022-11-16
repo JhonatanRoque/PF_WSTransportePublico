@@ -26,6 +26,35 @@
         
     }
 
+    public static function listarParadas() {
+        include("connection_db.php");
+        
+        $query = " SELECT  tbP.id as id, tbP.nombre as parada FROM tbRuta as tbR INNER JOIN tbRutaParada as tbRP ON tbR.id = tbRP.rutaID INNER JOIN tbParada as tbP ON tbRP.paradaID = tbP.id WHERE tbR.id = ?";
+    
+        try {
+            $link=conexion();    
+            $comando = $link->prepare($query);
+            // Ejecutar sentencia preparada
+            $comando->execute(array());
+            
+            $rows_array = array();
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+                {
+                                       
+                     $array [] = array('id' => $result['id'] ,'parada' => $result['parada']);
+                    
+                }
+                
+                //array_map("utf8_encode", $array);
+                  header('Content-type: application/json; charset=utf-8');
+                  return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+                 
+        } catch (PDOException $e) {
+            return false;
+        }
+        
+    }
+
     public static function listarParadasIndividual($rutaID) {
         include("connection_db.php");
         
