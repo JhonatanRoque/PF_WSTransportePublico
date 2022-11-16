@@ -45,7 +45,7 @@ class Empleados{
 
     public static function getUbicaciones($rutaID){
         include("connection_db.php");
-        $query = " SELECT tbE.nombre, tbE.apellido, tbE.latitud, tbE.longitud FROM tbEmpleado as tbE WHERE tbE.rutaID = ?";
+        $query = "SELECT tbE.nombre, tbE.apellido, tbE.latitud, tbE.longitud FROM tbEmpleado as tbE WHERE tbE.rutaID = ?";
 
         try{
             $link = conexion();
@@ -58,6 +58,10 @@ class Empleados{
                  $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'latitud' => $result['latitud'], 'longitud' => $result['longitud']);
                 
             }
+
+            //array_map("utf8_encode", $array);
+            header('Content-type: application/json; charset=utf-8');
+            return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
         }catch (PDOException $e){
             return -1;
         }
