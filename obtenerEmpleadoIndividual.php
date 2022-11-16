@@ -4,11 +4,7 @@ $correo = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
 if($correo != ""){
     $resultado = Empleados::listarEmpleadoIndividual($correo);
-    if ($resultado != "") {
         echo $resultado;
-    } else {
-    echo "0";
-}
 }
 
 
