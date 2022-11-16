@@ -2,9 +2,15 @@
 include("empleado.php.php");
 $correo = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
-if($correo != ""){
+if($empresaID != ""){
     $resultado = Empleados::listarEmpleadoIndividual($correo);
+    if ($resultado) {
         echo $resultado;
+    } else {
+        echo "0";
+    }
+}else {
+    echo "Faltan datos, para procesar la solicitud.";
 }
 
 
