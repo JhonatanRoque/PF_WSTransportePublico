@@ -71,7 +71,7 @@ class Empleados{
   public static function listarEmpleados($empresaID) {
     include("connection_db.php");
     
-    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbAuto as tbA ON tbE.autoID = tbA.id WHERE tbE.correo = ?";
+    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbAuto as tbA ON tbE.autoID = tbA.id WHERE tbE.empresaID = ?";
 
     try {
         $link=conexion();    
@@ -99,10 +99,9 @@ class Empleados{
 
 public static function listarEmpleadoIndividual($correo) {
     include("connection_db.php");
-    
-    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbAuto as tbA ON tbE.autoID = tbA.id WHERE tbE.correo = '?'";
+    $query = "SELECT tbE.nombre, tbE.apellido, tbE.telefono, tbE.correo, tbE.direccion, tbR.nombre as ruta, tbA.Nplaca as auto FROM tbEmpleado as tbE INNER JOIN tbRuta as tbR ON tbE.rutaID = tbR.id INNER JOIN tbAuto as tbA ON tbE.autoID = tbA.id WHERE tbE.correo = ?";
 
-    try { 
+    try {
         $link=conexion();    
         $comando = $link->prepare($query);
         // Ejecutar sentencia preparada
