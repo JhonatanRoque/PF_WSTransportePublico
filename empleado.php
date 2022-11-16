@@ -127,10 +127,10 @@ public static function listarEmpleadoIndividual($correo) {
 }
     
 //Metodo para modificar producto
-public static function modificar_Productos($id, $nombre, $descripcion, $stock, $precio, $unidadM, $estado, $categoriaID){
+public static function modificarEmpleado($nombre, $apellido, $telefono, $correo, $direccion, $ruta, $auto){
     include("connection_db.php");
-    $query = "UPDATE  tb_producto 
-    SET nom_producto = ?, des_producto = ?, stock = ?, precio = ?, 
+    $query = "UPDATE  tbEmpleado
+    SET nombre = ?, apellido = ?, stock = ?, precio = ?, 
     unidad_de_medida = ?, estado_producto = ?, categoria = ? 
     WHERE id_producto = ?";
     try{    
