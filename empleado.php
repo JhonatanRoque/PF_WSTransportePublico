@@ -107,9 +107,9 @@ public static function listarEmpleadoIndividual($correo) {
         $comando = $link->prepare($query);
         // Ejecutar sentencia preparada
         $comando->execute(array($correo));
-        $result = $comando->fetch(PDO::FETCH_ASSOC);
-        $rows = $comando->rowCount();
-        if($rows > 0)
+        
+        $rows_array = array();
+        if($result = $comando->fetch(PDO::FETCH_ASSOC))
             {
                                    
                  $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
