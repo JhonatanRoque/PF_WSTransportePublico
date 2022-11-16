@@ -16,7 +16,7 @@ if(($id != "") and ($lat != "") and ($long != "")){
         //echo "Registro guardado...";
     } else {
         header('Content-type: application/json; charset=utf-8');
-        $json_string = json_encode(array("estado" => 2,"mensaje" => "Ocurrio un problema, no se pudo registrar la ubicacion para el empleado $id"));
+        $json_string = json_encode(array("estado" => 2,"mensaje" => $resultado));
 		echo $json_string;
         
 

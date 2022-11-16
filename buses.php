@@ -26,10 +26,10 @@
         
     }
 
-    public static function listarBuses($empresaID) {
+    public static function listarBuses() {
         include("connection_db.php");
         
-        $query = "SELECT * FROM tbAuto WHERE tbE.empresaID = ?";
+        $query = "SELECT * FROM tbAuto";
     
         try {
             $link=conexion();    

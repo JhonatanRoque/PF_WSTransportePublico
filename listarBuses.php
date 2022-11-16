@@ -1,18 +1,14 @@
 <?php
 include("buses.php");
 
-$empresaID = $_POST['empresaID'];
 
-if($empresaID != ""){
-    $resultado = Buses::listarBuses($empresaID);
+
+    $resultado = Buses::listarBuses();
     if ($resultado) {
         echo $resultado;
     } else {
         echo "0";
     }
-}else {
-    echo "Faltan datos, para procesar la solicitud.";
-}
 
 
 
