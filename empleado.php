@@ -109,13 +109,11 @@ public static function listarEmpleadoIndividual($correo) {
         $comando->execute(array($correo));
         
         $rows_array = array();
-        if($result = $comando->fetch(PDO::FETCH_ASSOC))
+        while($result = $comando->fetch(PDO::FETCH_ASSOC))
             {
                                    
                  $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
                 
-            }else {
-                $array = (array("Mensaje" => "No se encontro ningun registro "));
             }
             
             //array_map("utf8_encode", $array);
