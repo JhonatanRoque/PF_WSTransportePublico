@@ -1,10 +1,10 @@
 <?php
-include("empleado.php.php");
-//$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
-$email = "1";
+include("empleado.php");
+$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
+
 
 if($email != ""){
-    $resultado = Empleados::listarEmpleados($email);
+    $resultado = Empleados::listarEmpleadoIndividual($email);
     if ($resultado) {
         echo $resultado;
     } else {
