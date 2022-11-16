@@ -1,6 +1,6 @@
 <?php
 include("empleado.php.php");
-$correo = $_POST['correo'];
+$correo = htmlspecialchars($_POST['correo'], ENT_QUOTES);
 
 if($correo != ""){
     $resultado = Empleados::listarEmpleadoIndividual($correo);
