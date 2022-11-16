@@ -1,6 +1,7 @@
 <?php
 include("empleado.php.php");
-$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
+//$eamil = htmlspecialchars($_POST['correo'], ENT_QUOTES);
+$email = "fran@gmail.com";
 
 if($email != ""){
     $resultado = Empleados::listarEmpleadoIndividual($email);
