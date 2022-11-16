@@ -1,6 +1,6 @@
 <?php
 
-    class empresaCRUD{
+    class Buses{
         
     //Metodo para consultar si existe una empresa con dicho nombre y contraseña
     public static function getLogin($empresa, $contrasena){
@@ -26,28 +26,34 @@
         
     }
 
-    public static function getDatosIndividual($empresa){
+    public static function listarBuses($empresaID) {
         include("connection_db.php");
         
-        // Consulta de la tabla usuarios para verificar email existentes.
-        $query = "SELECT * FROM tb_empresa WHERE nombre = ? ";
-        try {    
-              $link=conexion();    
-              $comando = $link->prepare($query);
-              $comando->execute(array($empresa));
-              $row = $comando->fetch(PDO::FETCH_ASSOC);
-              $filasAfectadas = $comando->rowCount();
-              if( $filasAfectadas > 0){
-                return $row;
-              }
-              $mensaje = array("mensaje" =>"No se encontraron los datos de dicha empresa");
-              return $mensaje;
+        $query = "SELECT * FROM tbAuto WHERE tbE.empresaID = ?";
     
-            } catch (PDOException $e) {
-                return -1;
-            }
+        try {
+            $link=conexion();    
+            $comando = $link->prepare($query);
+            // Ejecutar sentencia preparada
+            $comando->execute(array($empresaID));
             
+            $rows_array = array();
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+                {
+                                       
+                     $array [] = array('marca' => $result['marca'], 'NumeroPlaca' => $result['Nplaca'], 'color' => $result['color'], 'capacidad' => $result['capacidad'], 'fechaRegistro' => $result['fechaRegistro']);
+                    
+                }
+                
+                //array_map("utf8_encode", $array);
+                  header('Content-type: application/json; charset=utf-8');
+                  return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+                 
+        } catch (PDOException $e) {
+            return false;
         }
+        
+    }
         
     //Metodo para registrar empresas
     public static function setEmpresa($nombre, $telefono, $correo, $direccion, $codigopostal, $contrasena){
@@ -55,11 +61,7 @@
         $query = "INSERT INTO tbEmpresa (nombre, telefono, correo, direccion, codigoPostal, contrasena)
         VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            $CheckUser = empresaCRUD::checkName($nombre);
-            if($CheckUser == 1){
-                $mensaje = "Nombre de Empresa no diponible, escoja otro.";
-                return $mensaje;
-            }
+           
             
             $link = conexion();
             $comando = $link -> prepare ($query);
