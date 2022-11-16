@@ -29,7 +29,7 @@
     public static function listarParadas() {
         include("connection_db.php");
         
-        $query = " SELECT  tbP.id as id, tbP.nombre as parada FROM tbRuta as tbR INNER JOIN tbRutaParada as tbRP ON tbR.id = tbRP.rutaID INNER JOIN tbParada as tbP ON tbRP.paradaID = tbP.id WHERE tbR.id = ?";
+        $query = " SELECT  tbP.id as id, tbP.nombre as parada FROM tbParada as tbP";
     
         try {
             $link=conexion();    
