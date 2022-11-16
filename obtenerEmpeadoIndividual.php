@@ -1,10 +1,9 @@
 <?php
 include("empleado.php.php");
-$id = $_POST['codigo'];
-//$id = 16272;
+$correo = $_POST['correo'];
 
 if($id != ""){
-    $resultado = Empleados::listarEmpleadoIndividual($id);
+    $resultado = Empleados::listarEmpleadoIndividual($correo);
     if ($resultado) {
         echo $resultado;
     } else {
