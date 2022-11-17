@@ -171,6 +171,36 @@ public static function listarEmpleadoIndividual($correo) {
     }
     
 }
+
+//Método para loguearse
+public static function getLogin($correo, $contrasena) {
+    include("connection_db.php");
+    $query = "SELECT ";
+
+    try {
+        $link=conexion();    
+        $comando = $link->prepare($query);
+        // Ejecutar sentencia preparada
+        $comando->execute(array($correo));
+        
+        $rows_array = array();
+        while($result = $comando->fetch(PDO::FETCH_ASSOC))
+            {
+                                   
+                 $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
+                
+            }
+            
+            //array_map("utf8_encode", $array);
+              header('Content-type: application/json; charset=utf-8');
+              return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+             
+    } catch (PDOException $e) {
+        return false;
+    }
+    
+}
+
     
 //Metodo para modificar producto
 public static function modificarEmpleado($nombre, $apellido, $telefono, $correo, $direccion, $ruta, $auto){

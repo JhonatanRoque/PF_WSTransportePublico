@@ -60,6 +60,11 @@
                 $mensaje = "Nombre de Empresa no diponible, escoja otro.";
                 return $mensaje;
             }
+            $CheckEmail = empresaCRUD::checkCorreo($correo);
+            if($CheckUser == 1){
+                $mensaje = "Correo de Empresa no diponible, escoja otro.";
+                return $mensaje;
+            }
             
             $link = conexion();
             $comando = $link -> prepare ($query);
@@ -97,125 +102,51 @@
             return $e;
         }
     }
+
+    private static function checkCorreo($correo){
+        $query = "SELECT correo FROM tbEmpresa WHERE correo = ?";
+        try{
+            $link = conexion();
+            $comando = $link -> prepare ($query);
+            $comando -> execute (array($correo));
+            $row = $comando -> rowCount();
+            if($row > 0){
+                //significa que encontro una cuenta de empresa que ya tiene ese nombre 
+                //No permite crear cuenta si esto sucede
+                return 1;
+            }else{
+                //No encontro ninguna empresa con dicho nombre 
+                //puede continuar con el registro 
+                return 0;
+            }
+        }catch(PDOException $e){
+            return $e;
+        }
+    }
       
-        //Método para obtener la pregunta
-        public static function getPregunta($correo){
-            include ("connection_db.php");
-            $query = "SELECT pregunta FROM tb_usuario WHERE correo = ?";
-            try{
-                $link = conexion();
-                $comando = $link->prepare($query);
-                $comando->execute(array($correo));
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                $filasAfectadas = $comando->rowCount();
-                if( $filasAfectadas > 0){
-                    return $row;
-                }else{
-                    //No encontro ninguna pregunta asociada a ese usuario
-                    return 0;
-                }
-            }catch(PDOException $e){
-                return $e;
+    //Metodo para eliminar una empresa
+    public static function eliminarEmpresa($empresa){
+        $query = "DELETE tbEmpresa WHERE id = ?";
+        try{
+            $link = conexion();
+            $comando = $link -> prepare ($query);
+            $comando -> execute (array($empresa));
+            $row = $comando -> rowCount();
+            if($row > 0){
+                //significa que elimino la cuenta satisfactoriamente
+                return 1;
+            }else{
+                //No elimino nada
+                return 0;
             }
+        }catch(PDOException $e){
+            return $e;
         }
-        //Metodo para verificar la respuesta 
-        public static function checkRespuesta($correo, $pregunta, $respuesta){
-            include ("connection_db.php");
-            $query = "SELECT respuesta, usuario FROM tb_usuario WHERE correo = ? AND pregunta = ?";
-            try{
-                $link = conexion();
-                $comando = $link->prepare($query);
-                $comando->execute(array($correo, $pregunta));
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                $filasAfectadas = $comando->rowCount();
-                if( $filasAfectadas > 0){ //Sabemos que encontro una respuesta a la pregunta y al usuario
-                    if($respuesta == $row['respuesta']){ //Corroboramos que nuestra respuesta sea igual a la respuesta del servidor
-                        return $row['usuario']; //Si lo es, devolvemos el usuario
-                    }else{
-                        return -1;
-                    }
-                }else{
-                    //No encontro ninguna respuesta
-                    return 0;
-                }
-            }catch(PDOException $e){
-                return $e;
-            }
-        }
+    }
 
-         //Metodo para verificar la respuesta 
-         public static function recuperarContrasena($correo, $pregunta, $respuesta){
-            include ("connection_db.php");
-            $query = "SELECT respuesta, clave FROM tb_usuario WHERE correo = ? AND pregunta = ?";
-            try{
-                $link = conexion();
-                $comando = $link->prepare($query);
-                $comando->execute(array($correo, $pregunta));
-                $row = $comando->fetch(PDO::FETCH_ASSOC);
-                $filasAfectadas = $comando->rowCount();
-                if( $filasAfectadas > 0){ //Sabemos que encontro una respuesta a la pregunta y al usuario
-                    if($respuesta == $row['respuesta']){ //Corroboramos que nuestra respuesta sea igual a la respuesta del servidor
-                        return $row['clave']; //Si lo es, devolvemos la contraseña
-                    }else{
-                        return -1;
-                    }
-                }else{
-                    //No encontro ninguna respuesta
-                    return 0;
-                }
-            }catch(PDOException $e){
-                return $e;
-            }
-        }
 
-         //Metodo para verificar la respuesta 
-         public static function eliminarCuenta($id){
-            include ("connection_db.php");
-            $query = "DELETE FROM tb_usuario WHERE id = ?";
-            try{
-                $link = conexion();
-                $comando = $link->prepare($query);
-                $comando->execute(array($id));
-                $filasAfectadas = $comando->rowCount();
-                if( $filasAfectadas > 0){ //Sabemos que elimino una cuenta
-                    return 1;
-                }else{
-                    //No encontro ninguna cuenta que eliminar 
-                    return 0;
-                }
-            }catch(PDOException $e){
-                return $e;
-            }
-        }
 
-        //Método para obtener usuarios
-        public static function obtenerUsuarios() {
-            include("connection_db.php");
-            
-            $query = "SELECT * FROM tb_usuario";
         
-            try {
-                $link=conexion();    
-                $comando = $link->prepare($query);
-                // Ejecutar sentencia preparada
-                $comando->execute();
-                
-                $rows_array = array();
-                while($result = $comando->fetch(PDO::FETCH_ASSOC))
-                    {
-                         $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'correo' => $result['correo'], 'usuario' => $result['usuario']);
-                        
-                    }
-                    
-                    //array_map("utf8_encode", $array);
-                      header('Content-type: application/json; charset=utf-8');
-                      return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
-                     
-            } catch (PDOException $e) {
-                return false;
-            }
-            
-        }
         //Metodo para generar el codigo de verificación de la base de datos
         public static function setCodigoV(){
             try{
