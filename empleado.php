@@ -173,9 +173,9 @@ public static function listarEmpleadoIndividual($correo) {
 }
 
 //Método para loguearse
-public static function getLogin($correo, $contrasena) {
+public static function getLogin($correo) {
     include("connection_db.php");
-    $query = "SELECT ";
+    $query = "SELECT * FROM tbEmpleado WHERE correo = ?";
 
     try {
         $link=conexion();    
@@ -184,16 +184,11 @@ public static function getLogin($correo, $contrasena) {
         $comando->execute(array($correo));
         
         $rows_array = array();
-        while($result = $comando->fetch(PDO::FETCH_ASSOC))
-            {
-                                   
-                 $array [] = array('nombre' => $result['nombre'], 'apellido' => $result['apellido'], 'telefono' => $result['telefono'], 'correo' => $result['correo'], 'direccion' => $result['direccion'], 'ruta' => $result['ruta'], 'bus' => $result['auto']);
-                
-            }
+        $result = $comando->fetch(PDO::FETCH_ASSOC);
             
             //array_map("utf8_encode", $array);
               header('Content-type: application/json; charset=utf-8');
-              return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+              return print_r(json_encode($result), JSON_UNESCAPED_UNICODE);
              
     } catch (PDOException $e) {
         return false;
