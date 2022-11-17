@@ -201,7 +201,8 @@
                 $row = $comando->fetch(PDO::FETCH_ASSOC);
                 $filasAfectadas = $comando->rowCount();
                 if( $filasAfectadas > 0){
-                    return $row['codigo'];
+                    $resultado = $row['codigo'];
+                    return $resultado;
                 }else{
                     //No se encontro ningun codigo para enviar
                     return 0;
