@@ -2,7 +2,7 @@
 include('empresacrud.php'); 
 $codigo = $_POST['codigo'];
 
-if (($id !="") ) {
+if (($codigo !="") ) {
      	
     $resultado = empresaCRUD::checkCodigoRegistro($codigo);
 
