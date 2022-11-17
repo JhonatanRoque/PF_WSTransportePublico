@@ -128,6 +128,7 @@
 
     //Método para validar codigo de registro
     public static function checkCodigoRegistro($codigo){
+        include('connection_db.php');
         $query = "SELECT codigoValidacion FROM tbCodigo WHERE codigoValidacion = ?";
         try{
             $link = conexion();
