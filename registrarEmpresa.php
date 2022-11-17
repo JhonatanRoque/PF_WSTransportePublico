@@ -3,7 +3,7 @@
 
     //Recibir variables;
     $nombre = htmlspecialchars($_POST["nombres"],ENT_QUOTES);
-    $telefono = $_POST['telefono'];
+    $telefono = htmlspecialchars($_POST['telefono'], ENT_QUOTES);
     $correo = htmlspecialchars($_POST["correo"],ENT_QUOTES);
     $direccion = htmlspecialchars($_POST["direccion"],ENT_QUOTES);
     $codigo_postal = htmlspecialchars($_POST["codigoPostal"],ENT_QUOTES);

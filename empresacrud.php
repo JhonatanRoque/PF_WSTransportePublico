@@ -26,6 +26,8 @@
         
     }
 
+    
+
     public static function getDatosIndividual($empresa){
         include("connection_db.php");
         
@@ -123,6 +125,26 @@
             return $e;
         }
     }
+
+    //Método para validar codigo de registro
+    public static function checkCodigoRegistro($codigo){
+        $query = "SELECT codigoValidacion FROM tbCodigo WHERE codigoValidacion = ?";
+        try{
+            $link = conexion();
+            $comando = $link -> prepare ($query);
+            $comando -> execute (array($codigo));
+            $row = $comando -> rowCount();
+            if($row > 0){
+                //significa que encontro un registro que coincide
+                return 1;
+            }else{
+                //No encontro el codigo
+                return 0;
+            }
+        }catch(PDOException $e){
+            return $e;
+        }
+    }
       
     //Metodo para eliminar una empresa
     public static function eliminarEmpresa($empresa){
@@ -151,7 +173,7 @@
         public static function setCodigoV(){
             try{
                 $codigo = rand(100000, 999999);
-                $query = "UPDATE tb_codigo SET codigoValidacion = $codigo";
+                $query = "UPDATE tbCodigo SET codigoValidacion = $codigo";
                 $link = conexion();
                 $comando = $link->prepare($query);
                 $comando->execute();
@@ -172,7 +194,7 @@
                 if(!$bandera > 0 ){
                     return array("mensaje" => "No se modifico el codigo");
                 }
-                $query = "SELECT codigoValidacion as codigo FROM tb_codigo";
+                $query = "SELECT codigoValidacion as codigo FROM tbCodigo";
                 $link = conexion();
                 $comando = $link->prepare($query);
                 $comando->execute();
