@@ -67,6 +67,29 @@ class Empleados{
         }
     }
     
+    public static function getParadas($rutaID){
+        include("connection_db.php");
+        $query = " SELECT tbP.nombre, tbP.latitud, tbP.longitud FROM tbRutaParada as tbRP INNER JOIN tbParada as tbP ON tbRP.paradaID = tbP.id WHERE tbRP.rutaID = ?";
+
+        try{
+            $link = conexion();
+            $comando = $link->prepare($query);
+            $comando->execute(array($rutaID));
+            $count = $comando->rowCount(); 
+            while($result = $comando->fetch(PDO::FETCH_ASSOC))
+            {
+                                   
+                 $array [] = array('nombre' => $result['nombre'], 'latitud' => $result['latitud'], 'longitud' => $result['longitud']);
+                
+            }
+
+            //array_map("utf8_encode", $array);
+            header('Content-type: application/json; charset=utf-8');
+            return print_r(json_encode($array), JSON_UNESCAPED_UNICODE);
+        }catch (PDOException $e){
+            return -1;
+        }
+    }
     
     
     
